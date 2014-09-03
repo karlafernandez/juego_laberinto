@@ -1,4 +1,10 @@
-package PACMAN;
+package main;
+import figure.FlyweightFactory;
+import figure.Gate;
+import figure.Pacman;
+import figure.Wall;
+import figure.WallImp;
+import gamelogic.PacmanLogic;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -6,24 +12,28 @@ import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
-public class PacmanPanel extends JPanel{ 
+public class LabPanel extends JPanel{ 
 
     private Image dbImage;
     private Graphics dbg;
-    Pacman pacman;
-    Laberinto L;
+    private PacmanLogic pacman;
+    private LabyrinthSingleton L;
     boolean inicia=true;
     
-    public PacmanPanel(){
+    private Wall wall = FlyweightFactory.getWall();
+    private Gate gate = FlyweightFactory.getGate();
+    
+    public LabPanel(){
         //Propiedades        
-        setSize(1000,650);
+        setSize(500,500);
         setVisible(true);
         setBackground(Color.BLACK);
         
-        L=new Laberinto();
+        L = LabyrinthSingleton.getInstance();
         L.mostrar_lab();
 
-        pacman = new Pacman(400,550);
+        pacman = new PacmanLogic();
+        pacman.updatePosition(100, 100);
         
         //Hilos
         Thread t1 = new Thread(pacman);
@@ -52,19 +62,20 @@ public class PacmanPanel extends JPanel{
     }
     
     public void construirLaberinto(Graphics g){
+                
         int x = 0;
         int y = 0;
-        for(int i=0; i<L.FILAS; ++i){
-            for(int j=0; j<L.COLUMNAS; ++j){
+        for(int i=0; i < L.FILAS; ++i){
+            for(int j=0; j < L.COLUMNAS; ++j){
                 if(L.lab[i][j]==L.PARED){
-                    g.drawImage(new ImageIcon("C:\\Users\\jorge\\Documents\\GitHub\\MaestriaPW\\PACMAN_LABERINTO\\recursos\\wall.jpg").getImage(), x, y, 50, 50, this);
-                    x+=50;
+                    g.drawImage(wall.getImage(), x, y, wall.getPixSize(), wall.getPixSize(), this);
+                    x += wall.getPixSize();
                 }
                 else
-                    x+=50;
+                    x += wall.getPixSize();
             }
-            x=0;
-            y+=50;
+            x = 0;
+            y += wall.getPixSize();
         }
     }
     

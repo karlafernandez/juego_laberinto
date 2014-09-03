@@ -1,4 +1,5 @@
-package PACMAN;
+package main;
+
 import java.awt.Color;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -9,16 +10,15 @@ import javax.swing.JMenuItem;
 
 public class MainFrame extends JFrame {
     
-    static PacmanPanel P = new PacmanPanel();
+    static LabPanel P = new LabPanel();
 
     public MainFrame(){
         setTitle("PACMAN");
         setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(1000, 700);
         setLocationRelativeTo(null);
         setBackground(Color.BLACK);
-        
+                
         JMenuBar menuBar = new JMenuBar();
         JMenu menu;
         JMenuItem menuItem;
@@ -62,5 +62,6 @@ public class MainFrame extends JFrame {
         
         frame.setVisible(true);
         frame.add(P);
+        frame.setSize(P.size());
     } 
 }
