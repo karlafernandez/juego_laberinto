@@ -7,7 +7,7 @@ import java.awt.Image;
 import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;
 
-public class PacmanImp extends FlyweightFigure implements Pacman{
+public class PacmanImp extends Figure implements Pacman{
     
     /**
     * Intrinsic State

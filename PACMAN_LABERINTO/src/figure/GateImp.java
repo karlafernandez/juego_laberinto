@@ -15,7 +15,7 @@ import javax.swing.ImageIcon;
  *
  * @author rgap
  */
-public class GateImp extends FlyweightFigure implements Gate  {
+public class GateImp extends Figure implements Gate  {
     
     /**
     * Intrinsic State

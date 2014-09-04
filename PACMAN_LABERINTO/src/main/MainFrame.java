@@ -62,6 +62,6 @@ public class MainFrame extends JFrame {
         
         frame.setVisible(true);
         frame.add(P);
-        frame.setSize(P.size());
+        frame.setSize(500, 550);
     } 
 }

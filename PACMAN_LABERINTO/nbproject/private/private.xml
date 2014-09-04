@@ -3,15 +3,16 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/jorge/Documents/GitHub/juego_laberinto/PACMAN_LABERINTO/src/figure/FlyweightFigure.java</file>
             <file>file:/C:/Users/jorge/Documents/GitHub/juego_laberinto/PACMAN_LABERINTO/src/figure/Gate.java</file>
             <file>file:/C:/Users/jorge/Documents/GitHub/juego_laberinto/PACMAN_LABERINTO/src/main/LabyrinthSingleton.java</file>
             <file>file:/C:/Users/jorge/Documents/GitHub/juego_laberinto/PACMAN_LABERINTO/src/figure/FlyweightFactory.java</file>
-            <file>file:/C:/Users/jorge/Documents/GitHub/juego_laberinto/PACMAN_LABERINTO/src/main/MainFrame.java</file>
             <file>file:/C:/Users/jorge/Documents/GitHub/juego_laberinto/PACMAN_LABERINTO/src/figure/Pacman.java</file>
+            <file>file:/C:/Users/jorge/Documents/GitHub/juego_laberinto/PACMAN_LABERINTO/src/figure/Figure.java</file>
+            <file>file:/C:/Users/jorge/Documents/GitHub/juego_laberinto/PACMAN_LABERINTO/src/figure/GateImp.java</file>
             <file>file:/C:/Users/jorge/Documents/GitHub/juego_laberinto/PACMAN_LABERINTO/src/figure/Wall.java</file>
-            <file>file:/C:/Users/jorge/Documents/GitHub/juego_laberinto/PACMAN_LABERINTO/src/figure/WallImp.java</file>
+            <file>file:/C:/Users/jorge/Documents/GitHub/juego_laberinto/PACMAN_LABERINTO/src/main/LabPanel.java</file>
             <file>file:/C:/Users/jorge/Documents/GitHub/juego_laberinto/PACMAN_LABERINTO/src/gamelogic/PacmanLogic.java</file>
+            <file>file:/C:/Users/jorge/Documents/GitHub/juego_laberinto/PACMAN_LABERINTO/src/figure/WallImp.java</file>
             <file>file:/C:/Users/jorge/Documents/GitHub/juego_laberinto/PACMAN_LABERINTO/src/figure/PacmanImp.java</file>
         </group>
     </open-files>

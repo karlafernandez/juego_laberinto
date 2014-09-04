@@ -30,7 +30,7 @@ public class LabPanel extends JPanel{
         setBackground(Color.BLACK);
         
         L = LabyrinthSingleton.getInstance();
-        L.mostrar_lab();
+        //L.mostrar_lab();
 
         pacman = new PacmanLogic();
         pacman.updatePosition(100, 100);

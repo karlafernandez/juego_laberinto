@@ -15,7 +15,7 @@ import javax.swing.ImageIcon;
  *
  * @author rgap
  */
-public class WallImp extends FlyweightFigure implements Wall{
+public class WallImp extends Figure implements Wall{
         
     /**
     * Intrinsic State
