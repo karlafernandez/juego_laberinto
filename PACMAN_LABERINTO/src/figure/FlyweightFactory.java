@@ -16,8 +16,8 @@ public class FlyweightFactory {
     * Pool
     */
     
-    private static Wall WALL;
-    private static Gate GATE;
+    private static WallImp WALL;
+    private static GateImp GATE;
     private static Pacman PACMAN;
     
     /**
@@ -25,14 +25,14 @@ public class FlyweightFactory {
      * @return 
      */
     
-    public static Wall getWall() {
+    public static FigureImp getWall() {
         if (WALL == null) {
             WALL = new WallImp();
         }
         return WALL;
     }
     
-    public static Gate getGate() {
+    public static FigureImp getGate() {
         if (GATE == null) {
             GATE = new GateImp();
         }

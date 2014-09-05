@@ -1,15 +1,11 @@
 package main;
+import figure.FigureImp;
 import figure.FlyweightFactory;
-import figure.Gate;
-import figure.Pacman;
-import figure.Wall;
-import figure.WallImp;
 import gamelogic.PacmanLogic;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.KeyEvent;
-import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
 public class LabPanel extends JPanel{ 
@@ -20,8 +16,8 @@ public class LabPanel extends JPanel{
     private LabyrinthSingleton L;
     boolean inicia=true;
     
-    private Wall wall = FlyweightFactory.getWall();
-    private Gate gate = FlyweightFactory.getGate();
+    private FigureImp wall = FlyweightFactory.getWall();
+    private FigureImp gate = FlyweightFactory.getGate();
     
     public LabPanel(){
         //Propiedades        

@@ -13,13 +13,10 @@ import java.awt.Image;
  * @author rgap
  */
 public class Figure {
-    
     protected int pixSize;
     protected int x;
     protected int y;
-    
     protected Image image;
-    
     Figure()
     {
         pixSize = 10;

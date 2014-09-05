@@ -6,7 +6,6 @@
 
 package figure;
 
-import figure.Wall;
 import java.awt.Graphics;
 import java.awt.Image;
 import javax.swing.ImageIcon;
@@ -15,7 +14,7 @@ import javax.swing.ImageIcon;
  *
  * @author rgap
  */
-public class WallImp extends Figure implements Wall{
+public class WallImp extends Figure implements FigureImp{
         
     /**
     * Intrinsic State
