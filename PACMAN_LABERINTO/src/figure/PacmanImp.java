@@ -23,7 +23,9 @@ public class PacmanImp extends Figure implements Pacman{
     
     @Override
     public void updatePosition(int newLocationX, int newLocationY) {
-        x = newLocationX;
+        if (newLocationX>=0 &&newLocationX<500)
+            x = newLocationX;
+        if (newLocationY>=0 &&newLocationY<500)
         y = newLocationY;
     }
 

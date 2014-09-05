@@ -10,6 +10,7 @@ import figure.FlyweightFactory;
 import figure.Pacman;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import main.LabyrinthSingleton;
@@ -53,6 +54,18 @@ public class PacmanLogic implements Runnable {
         if(L.lab[f][c] == L.PARED)
             return false;
         return true;
+    }
+    public boolean termino(int f,int c)
+    {
+        if(L.fin.x ==f& L.fin.y==c)
+            return true;
+        return false;
+    }
+    public boolean puerta(int f, int c) 
+    {
+       if(L.lab[f][c] == L.PUERTA)
+            return true;
+        return false; 
     }
     
     public void updatePosition(int newLocationX, int newLocationY){

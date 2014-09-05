@@ -13,6 +13,8 @@ import static com.googlecode.javacv.cpp.opencv_imgproc.CV_THRESH_BINARY;
 import static com.googlecode.javacv.cpp.opencv_imgproc.cvCvtColor;
 import static com.googlecode.javacv.cpp.opencv_imgproc.cvResize;
 import static com.googlecode.javacv.cpp.opencv_imgproc.cvThreshold;
+import com.sun.glass.ui.Size;
+import java.awt.Point;
 import java.nio.ByteBuffer;
 import java.util.Random;
 import javax.swing.JFrame;
@@ -29,7 +31,8 @@ public class LabyrinthSingleton {
     public int PARED = 1;
     public int PUERTA=2;
     public int PASILLO = 0;
-
+    public Point inicio; 
+    public Point fin; 
     public int lab[][] = new int[FILAS][COLUMNAS];
 
     private LabyrinthSingleton() {
