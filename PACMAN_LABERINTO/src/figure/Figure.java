@@ -20,10 +20,15 @@ public class Figure {
     
     protected Image image;
     
-    Figure(){
+    Figure()
+    {
         pixSize = 10;
         x = 0;
         y = 0;
         image = null;
+    }
+    void setSize(int _pixSize)
+    {
+        this.x=pixSize;
     }
 }
