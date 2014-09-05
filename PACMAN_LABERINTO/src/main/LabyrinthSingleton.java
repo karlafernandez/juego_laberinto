@@ -27,6 +27,7 @@ public class LabyrinthSingleton {
     public int FILAS = 50;
     public int COLUMNAS = 50;
     public int PARED = 1;
+    public int PUERTA=2;
     public int PASILLO = 0;
 
     public int lab[][] = new int[FILAS][COLUMNAS];
@@ -128,9 +129,11 @@ public class LabyrinthSingleton {
                     }
                 }
                 
-                if(countwhites >= 50)
+                if(countwhites > 50)
                     lab[y/10][x/10] = PARED;
-                else
+                else if (countwhites==50)
+                    lab[y/10][x/10] = PUERTA;
+                    else
                     lab[y/10][x/10] = PASILLO;
             }
         }

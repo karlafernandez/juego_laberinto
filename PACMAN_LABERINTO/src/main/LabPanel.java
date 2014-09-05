@@ -67,6 +67,11 @@ public class LabPanel extends JPanel{
                     g.drawImage(wall.getImage(), x, y, wall.getPixSize(), wall.getPixSize(), this);
                     x += wall.getPixSize();
                 }
+                else if(L.lab[i][j]==L.PUERTA) 
+                {
+                    x += gate.getPixSize();
+                    g.drawImage(gate.getImage(), x, y, gate.getPixSize(), gate.getPixSize(), this);
+                }
                 else
                     x += wall.getPixSize();
             }

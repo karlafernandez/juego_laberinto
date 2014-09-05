@@ -13,7 +13,7 @@ public class MainFrame extends JFrame {
     static LabPanel P = new LabPanel();
 
     public MainFrame(){
-        setTitle("PACMAN");
+        setTitle("JUEGO DE LABERINTO");
         setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -59,7 +59,6 @@ public class MainFrame extends JFrame {
     public static void main(String[] args) {
         //Frame
         MainFrame frame = new MainFrame();
-        
         frame.setVisible(true);
         frame.add(P);
         frame.setSize(500, 550);
