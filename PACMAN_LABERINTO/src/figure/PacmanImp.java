@@ -17,7 +17,8 @@ public class PacmanImp extends Figure implements Pacman{
     private int yDirection;
     
     public PacmanImp(){
-        image = new ImageIcon("C:\\Users\\jorge\\Documents\\GitHub\\juego_laberinto\\PACMAN_LABERINTO\\recursos\\pacman.gif").getImage();
+        String currentDir = System.getProperty("user.dir");
+        image = new ImageIcon(currentDir+"/recursos/pacman.gif").getImage();
     }
     
     @Override

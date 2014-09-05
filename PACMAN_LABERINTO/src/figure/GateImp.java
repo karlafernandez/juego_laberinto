@@ -22,7 +22,8 @@ public class GateImp extends Figure implements Gate  {
     */
     
     GateImp(){
-        image = new ImageIcon("C:\\Users\\jorge\\Documents\\GitHub\\juego_laberinto\\PACMAN_LABERINTO\\juego_laberinto-master\\PACMAN_LABERINTO\\recursos\\gate.jpg").getImage();
+        String currentDir = System.getProperty("user.dir");
+        image = new ImageIcon(currentDir+"\recursos\\gate.jpg").getImage();
     }
     
     @Override

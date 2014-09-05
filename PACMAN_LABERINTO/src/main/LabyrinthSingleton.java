@@ -4,7 +4,6 @@ import com.googlecode.javacv.CanvasFrame;
 import static com.googlecode.javacv.cpp.opencv_core.IPL_DEPTH_8U;
 import com.googlecode.javacv.cpp.opencv_core.IplImage;
 import static com.googlecode.javacv.cpp.opencv_core.cvCreateImage;
-import static com.googlecode.javacv.cpp.opencv_core.cvGet2D;
 import static com.googlecode.javacv.cpp.opencv_core.cvGetSize;
 import static com.googlecode.javacv.cpp.opencv_core.cvSize;
 import static com.googlecode.javacv.cpp.opencv_highgui.cvLoadImage;
@@ -44,6 +43,13 @@ public class LabyrinthSingleton {
         }
         return singleton;
     }
+    
+    private int getPixSize(IplImage img_bin)
+    {
+        int pix=0;
+         for (int y = 0; y < img_bin.height(); y += 10);
+        return pix;
+    }
 
     public void mostrar_lab() {
         for (int i = 0; i < FILAS; ++i) {
@@ -69,8 +75,8 @@ public class LabyrinthSingleton {
     }
 
     public void matriz() {
-
-        String fileName = "C:\\Users\\jorge\\Desktop\\mapa2.jpg";
+        String currentDir = System.getProperty("user.dir");
+        String fileName = currentDir+"/recursos/mapa4.jpg";
         IplImage img_rgb = cvLoadImage(fileName, 1);
         if (img_rgb == null) {
             System.out.println("Couldn't load source image.");

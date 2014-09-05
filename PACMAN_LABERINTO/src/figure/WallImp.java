@@ -22,7 +22,8 @@ public class WallImp extends Figure implements Wall{
     */
         
     WallImp(){
-        image = new ImageIcon("C:\\Users\\jorge\\Documents\\GitHub\\juego_laberinto\\PACMAN_LABERINTO\\recursos\\wall.jpg").getImage();
+        String currentDir = System.getProperty("user.dir");
+        image = new ImageIcon(currentDir+"/recursos/wall.jpg").getImage();
     }
     
     @Override
@@ -33,7 +34,8 @@ public class WallImp extends Figure implements Wall{
 
     @Override
     public void draw(Graphics g){
-        g.drawImage(image, x, y, null);
+        //g.drawImage(image, x, y, null);
+        g.drawImage(image, x, y, pixSize, pixSize, null);
     }
 
     @Override
