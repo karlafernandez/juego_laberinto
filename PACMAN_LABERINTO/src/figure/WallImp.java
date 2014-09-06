@@ -3,28 +3,27 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package figure;
 
 import java.awt.Graphics;
 import java.awt.Image;
 import javax.swing.ImageIcon;
+import main.Global;
 
 /**
  *
  * @author rgap
  */
-public class WallImp extends Figure implements FigureAbstract{
-        
+public class WallImp extends Figure implements FigureAbstract {
+
     /**
-    * Intrinsic State
-    */
-        
-    WallImp(){
+     * Intrinsic State
+     */
+    WallImp() {
         String currentDir = System.getProperty("user.dir");
-        image = new ImageIcon(currentDir+"/recursos/wall.jpg").getImage();
+        image = new ImageIcon(currentDir + "/recursos/wall.jpg").getImage();
     }
-    
+
     @Override
     public void updatePosition(int newLocationX, int newLocationY) {
         x = newLocationX;
@@ -32,15 +31,15 @@ public class WallImp extends Figure implements FigureAbstract{
     }
 
     @Override
-    public void draw(Graphics g){
-        g.drawImage(image, x, y, pixSize, pixSize, null);
+    public void draw(Graphics g) {
+        g.drawImage(image, x, y, Global.pixSize, Global.pixSize, null);
     }
 
     @Override
     public int getPixSize() {
-        return pixSize;
+        return Global.pixSize;
     }
-    
+
     @Override
     public Image getImage() {
         return image;

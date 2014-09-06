@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package figure;
 
 import java.awt.Graphics;
@@ -13,10 +12,13 @@ import java.awt.Image;
  *
  * @author redarma
  */
-public interface FigureAbstract  
-{
-    public void updatePosition(int newLocationX ,int newLocationY);
+public interface FigureAbstract {
+
+    public void updatePosition(int newLocationX, int newLocationY);
+
     public void draw(Graphics g);
+
     public int getPixSize();
+
     public Image getImage();
 }

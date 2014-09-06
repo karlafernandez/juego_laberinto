@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package figure;
 
 /**
@@ -11,34 +10,33 @@ package figure;
  * @author rgap
  */
 public class FlyweightFactory {
-    
+
     /**
-    * Pool
-    */
-    
+     * Pool
+     */
     private static WallImp WALL;
     private static GateImp GATE;
     private static PacmanImp PACMAN;
-    
+
     /**
      * getFlyweight
-     * @return 
+     *
+     * @return
      */
-    
     public static FigureAbstract getWall() {
         if (WALL == null) {
             WALL = new WallImp();
         }
         return WALL;
     }
-    
+
     public static FigureAbstract getGate() {
         if (GATE == null) {
             GATE = new GateImp();
         }
         return GATE;
     }
-    
+
     public static Pacman getPacman() {
         if (PACMAN == null) {
             PACMAN = new PacmanImp();

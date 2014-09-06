@@ -34,14 +34,12 @@ public class GateImp extends Figure implements FigureAbstract {
 
     @Override
     public void draw(Graphics g){
-        g.drawImage(image, x, y, pixSize, pixSize, null);
+        g.drawImage(image, x, y, Global.pixSize, Global.pixSize, null);
     }
 
     @Override
     public int getPixSize() {
-        
-        return pixSize;
-       //return Global.pixSize;
+        return Global.pixSize;
     }
     
     @Override
