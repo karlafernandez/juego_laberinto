@@ -18,21 +18,21 @@ public class FlyweightFactory {
     
     private static WallImp WALL;
     private static GateImp GATE;
-    private static Pacman PACMAN;
+    private static PacmanImp PACMAN;
     
     /**
      * getFlyweight
      * @return 
      */
     
-    public static FigureImp getWall() {
+    public static FigureAbstract getWall() {
         if (WALL == null) {
             WALL = new WallImp();
         }
         return WALL;
     }
     
-    public static FigureImp getGate() {
+    public static FigureAbstract getGate() {
         if (GATE == null) {
             GATE = new GateImp();
         }

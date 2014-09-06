@@ -9,12 +9,13 @@ package figure;
 import java.awt.Graphics;
 import java.awt.Image;
 import javax.swing.ImageIcon;
+import main.Global;
 
 /**
  *
  * @author rgap
  */
-public class GateImp extends Figure implements FigureImp {
+public class GateImp extends Figure implements FigureAbstract {
     
     /**
     * Intrinsic State
@@ -22,7 +23,7 @@ public class GateImp extends Figure implements FigureImp {
     
     GateImp(){
         String currentDir = System.getProperty("user.dir");
-        image = new ImageIcon(currentDir+"\recursos\\gate.jpg").getImage();
+        image = new ImageIcon(currentDir+"/recursos/gate.jpg").getImage();
     }
     
     @Override
@@ -33,12 +34,14 @@ public class GateImp extends Figure implements FigureImp {
 
     @Override
     public void draw(Graphics g){
-        g.drawImage(image, x, y, null);
+        g.drawImage(image, x, y, pixSize, pixSize, null);
     }
 
     @Override
     public int getPixSize() {
+        
         return pixSize;
+       //return Global.pixSize;
     }
     
     @Override

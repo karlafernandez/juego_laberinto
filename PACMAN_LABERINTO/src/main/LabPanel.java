@@ -1,5 +1,5 @@
 package main;
-import figure.FigureImp;
+import figure.FigureAbstract;
 import figure.FlyweightFactory;
 import gamelogic.PacmanLogic;
 import java.awt.Color;
@@ -16,12 +16,12 @@ public class LabPanel extends JPanel{
     private LabyrinthSingleton L;
     boolean inicia=true;
     
-    private FigureImp wall = FlyweightFactory.getWall();
-    private FigureImp gate = FlyweightFactory.getGate();
+    private FigureAbstract wall = FlyweightFactory.getWall();
+    private FigureAbstract gate = FlyweightFactory.getGate();
     
     public LabPanel(){
         //Propiedades        
-        setSize(500,500);
+        setSize(610,610);
         setVisible(true);
         setBackground(Color.BLACK);
         
@@ -63,17 +63,13 @@ public class LabPanel extends JPanel{
         int y = 0;
         for(int i=0; i < L.FILAS; ++i){
             for(int j=0; j < L.COLUMNAS; ++j){
-                if(L.lab[i][j]==L.PARED){
+                if(L.lab[i][j] == L.PARED){
                     g.drawImage(wall.getImage(), x, y, wall.getPixSize(), wall.getPixSize(), this);
-                    x += wall.getPixSize();
                 }
-                else if(L.lab[i][j]==L.PUERTA) 
-                {
-                    x += gate.getPixSize();
+                else if(L.lab[i][j] == L.PUERTA) {
                     g.drawImage(gate.getImage(), x, y, gate.getPixSize(), gate.getPixSize(), this);
                 }
-                else
-                    x += wall.getPixSize();
+                x += wall.getPixSize();
             }
             x = 0;
             y += wall.getPixSize();

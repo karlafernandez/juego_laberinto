@@ -13,7 +13,7 @@ import java.awt.Image;
  *
  * @author redarma
  */
-public interface FigureImp  
+public interface FigureAbstract  
 {
     public void updatePosition(int newLocationX ,int newLocationY);
     public void draw(Graphics g);

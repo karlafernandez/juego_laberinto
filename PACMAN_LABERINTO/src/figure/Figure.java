@@ -7,6 +7,7 @@
 package figure;
 
 import java.awt.Image;
+import main.Global;
 
 /**
  *
@@ -17,15 +18,12 @@ public class Figure {
     protected int x;
     protected int y;
     protected Image image;
+    
     Figure()
     {
-        pixSize = 10;
+        pixSize = Global.pixSize;
         x = 0;
         y = 0;
         image = null;
-    }
-    void setSize(int _pixSize)
-    {
-        this.x=pixSize;
     }
 }

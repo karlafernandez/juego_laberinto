@@ -14,7 +14,7 @@ import javax.swing.ImageIcon;
  *
  * @author rgap
  */
-public class WallImp extends Figure implements FigureImp{
+public class WallImp extends Figure implements FigureAbstract{
         
     /**
     * Intrinsic State
@@ -33,7 +33,6 @@ public class WallImp extends Figure implements FigureImp{
 
     @Override
     public void draw(Graphics g){
-        //g.drawImage(image, x, y, null);
         g.drawImage(image, x, y, pixSize, pixSize, null);
     }
 

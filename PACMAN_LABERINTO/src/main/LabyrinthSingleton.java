@@ -13,7 +13,6 @@ import static com.googlecode.javacv.cpp.opencv_imgproc.CV_THRESH_BINARY;
 import static com.googlecode.javacv.cpp.opencv_imgproc.cvCvtColor;
 import static com.googlecode.javacv.cpp.opencv_imgproc.cvResize;
 import static com.googlecode.javacv.cpp.opencv_imgproc.cvThreshold;
-import com.sun.glass.ui.Size;
 import java.awt.Point;
 import java.nio.ByteBuffer;
 import java.util.Random;
@@ -29,7 +28,7 @@ public class LabyrinthSingleton {
     public int FILAS = 50;
     public int COLUMNAS = 50;
     public int PARED = 1;
-    public int PUERTA=2;
+    public int PUERTA = 2;
     public int PASILLO = 0;
     public Point inicio; 
     public Point fin; 
@@ -50,8 +49,21 @@ public class LabyrinthSingleton {
     
     private int getPixSize(IplImage img_bin)
     {
-        int pix=0;
-         for (int y = 0; y < img_bin.height(); y += 10);
+        ByteBuffer buffer = img_bin.getByteBuffer();
+        int value = 0, firstval = -1, i;
+        for (i = 0; i < img_bin.height(); i ++) {
+            int index = i * img_bin.widthStep() + i * img_bin.nChannels();
+            value = buffer.get(index) & 0xFF;
+            
+            if(firstval == -1)
+                firstval = value;
+            else if (firstval != value)
+                break;
+        }
+        
+        //int pix = i + 1;
+        int pix = 10;
+        Global.pixSize=10;
         return pix;
     }
 
@@ -77,10 +89,12 @@ public class LabyrinthSingleton {
             }
         }
     }
+    
 
+    
     public void matriz() {
         String currentDir = System.getProperty("user.dir");
-        String fileName = currentDir+"/recursos/mapa4.jpg";
+        String fileName = currentDir+"/recursos/mapa6.png";
         IplImage img_rgb = cvLoadImage(fileName, 1);
         if (img_rgb == null) {
             System.out.println("Couldn't load source image.");
@@ -118,12 +132,12 @@ public class LabyrinthSingleton {
         ByteBuffer buffer = img_bin.getByteBuffer();
         int value = 0;
         int countwhites;
-
-        for (int y = 0; y < img_bin.height(); y += 10) {
-            for (int x = 0; x < img_bin.width(); x += 10) {
+        int pixSize=getPixSize(img_bin);
+        for (int y = 0; y < img_bin.height(); y += pixSize) {
+            for (int x = 0; x < img_bin.width(); x += pixSize) {
                 countwhites = 0;
-                for(int i = 0; i < 10; i++) {
-                    for(int j = 0; j < 10; j++) {
+                for(int i = 0; i < pixSize; i++) {
+                    for(int j = 0; j < pixSize; j++) {
                         int index = (y + i) * img_bin.widthStep() + (x + j) * img_bin.nChannels();
                         value = buffer.get(index) & 0xFF;
 
@@ -141,5 +155,7 @@ public class LabyrinthSingleton {
             }
         }
     }
+    
+    
 
 }
