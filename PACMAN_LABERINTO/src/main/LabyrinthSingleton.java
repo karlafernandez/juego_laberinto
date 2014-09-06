@@ -140,7 +140,6 @@ public class LabyrinthSingleton {
                     for(int j = 0; j < pixSize; j++) {
                         int index = (y + i) * img_bin.widthStep() + (x + j) * img_bin.nChannels();
                         value = buffer.get(index) & 0xFF;
-
                         if (value > 0) // white - wall
                             countwhites += 1;
                     }

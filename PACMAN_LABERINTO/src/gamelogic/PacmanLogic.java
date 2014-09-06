@@ -43,9 +43,14 @@ public class PacmanLogic implements Runnable {
     }
     
     public boolean estaDentro(int f, int c){
+        if ((f>=0&&c>=0)&& (f<L.lab[0].length&&c<L.lab.length)) 
+        {
         if(L.lab[f][c] == L.PARED)
             return false;
         return true;
+        }
+        else 
+            return false;
     }
     public boolean termino(int f,int c)
     {
@@ -61,7 +66,8 @@ public class PacmanLogic implements Runnable {
     }
     
     public void updatePosition(int newLocationX, int newLocationY){
-        pacman.updatePosition(newLocationX, newLocationY);
+        if ((newLocationX>0|| newLocationY>0)&& (newLocationX<610 && newLocationY<610)) 
+         pacman.updatePosition(newLocationX, newLocationY);
     }
     
     public void draw(Graphics g){
@@ -73,7 +79,7 @@ public class PacmanLogic implements Runnable {
         try{
             while(true){
                 move();
-                Thread.sleep(200);
+                Thread.sleep(100);
             }
         }
         catch(Exception e){

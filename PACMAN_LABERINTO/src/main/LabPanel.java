@@ -29,7 +29,7 @@ public class LabPanel extends JPanel{
         //L.mostrar_lab();
 
         pacman = new PacmanLogic();
-        pacman.updatePosition(100, 100);
+        pacman.updatePosition(0, 0);
         
         //Hilos
         Thread t1 = new Thread(pacman);
