@@ -1,40 +1,29 @@
 package main;
 
-import com.googlecode.javacv.CanvasFrame;
-import static com.googlecode.javacv.cpp.opencv_core.IPL_DEPTH_8U;
 import com.googlecode.javacv.cpp.opencv_core.IplImage;
-import static com.googlecode.javacv.cpp.opencv_core.cvCreateImage;
-import static com.googlecode.javacv.cpp.opencv_core.cvGetSize;
-import static com.googlecode.javacv.cpp.opencv_core.cvSize;
-import static com.googlecode.javacv.cpp.opencv_highgui.cvLoadImage;
-import static com.googlecode.javacv.cpp.opencv_highgui.cvLoadImage;
-import static com.googlecode.javacv.cpp.opencv_imgproc.CV_BGR2GRAY;
-import static com.googlecode.javacv.cpp.opencv_imgproc.CV_INTER_LINEAR;
-import static com.googlecode.javacv.cpp.opencv_imgproc.CV_THRESH_BINARY;
-import static com.googlecode.javacv.cpp.opencv_imgproc.cvCvtColor;
-import static com.googlecode.javacv.cpp.opencv_imgproc.cvResize;
-import static com.googlecode.javacv.cpp.opencv_imgproc.cvResize;
-import static com.googlecode.javacv.cpp.opencv_imgproc.cvThreshold;
 import imageProcessing.MapProcessing;
 import java.awt.Point;
 import java.nio.ByteBuffer;
-import java.util.Random;
-import javax.swing.JFrame;
+import java.util.ArrayList;
+import java.util.List;
+import javax.xml.bind.annotation.XmlElementDecl;
 
 /*
  * Singleton
  */
 public class LabyrinthSingleton {
 
-    private static LabyrinthSingleton singleton = null;
+    private class puntos {
 
+        public Point punto;
+        public int pasillos = 0;
+    }
+    private static LabyrinthSingleton singleton = null;
     public int FILAS = 50;
     public int COLUMNAS = 50;
     public int PASILLO = 0;
     public int PARED = 1;
     public int PUERTA = 2;
-    public Point inicio;
-    public Point fin;
     public int lab[][];
     private MapProcessing mapProcessing;
 
@@ -50,10 +39,74 @@ public class LabyrinthSingleton {
         return singleton;
     }
 
+    private List<puntos> Accesos() {
+        List<puntos> Puertas = new ArrayList<puntos>();
+        // recorriendo lengh +10 parte superior
+        int value = 0;
+        for (int i = 0; i < lab.length - 1; i++) {
+            if (lab[i][Global.pixSize] == PASILLO) {
+                value++;
+            } else {
+                if (value > 10) {
+                    puntos pt = new puntos();
+                    pt.pasillos = value;
+                    pt.punto = new Point(Global.pixSize,i-value+2);
+                    Puertas.add(pt);
+
+                }
+                value = 0;
+            }
+        }
+        // recorriendo en y
+        value = 0;
+        for (int i = 0; i < lab[0].length - 1; i++) {
+            if (lab[Global.pixSize][i] == PASILLO) {
+                value++;
+            } else {
+                if (value > 12) {
+                    puntos pt = new puntos();
+                    pt.pasillos = value;
+                    pt.punto = new Point(i-value+2,Global.pixSize );
+                    Puertas.add(pt);
+                   
+                }
+                 value = 0;
+            }
+        }
+        // recorrido en  x al final
+          value = 0;
+        for (int i = 4; i < lab.length - 1; i++) {
+            if (lab[lab.length-5][i] == PASILLO) {
+                value++;
+            } else {
+                if (value > 12) {
+                    puntos pt = new puntos();
+                    pt.pasillos = value;
+                    pt.punto = new Point(i-value+2,lab.length-5);
+                    Puertas.add(pt);
+
+                }
+                value = 0;
+            }
+        }
+        return Puertas;
+    }
+
+    private void calcularpuntos() {
+        List<puntos> puertas = Accesos();
+        
+        if (puertas.size()>=0)
+        {
+         Global.inicio=new Point(puertas.get(0).punto.x,puertas.get(0).punto.y);
+         // colocar el final al centro del pacillo
+         Global.fin=new Point(puertas.get(1).punto.x+Global.pacmanPixSize/2,puertas.get(1).punto.y-Global.pacmanPixSize/2);
+        }
+    }
+
     private int getPixSize(IplImage img_bin) {
         ByteBuffer buffer = img_bin.getByteBuffer();
         int value = 0, firstval = -1, i;
-        for (i = 0; i < img_bin.height(); i++) {
+        for (i = 1; i < img_bin.height(); i++) {
             int index = i * img_bin.widthStep() + i * img_bin.nChannels();
             value = buffer.get(index) & 0xFF;
 
@@ -64,9 +117,8 @@ public class LabyrinthSingleton {
             }
         }
 
-        //int pix = i + 1;
-        int pix = 10;
-        Global.pixSize = 10;
+        int pix = i + 1;
+        //int pix = 10;
         return pix;
     }
 
@@ -82,7 +134,7 @@ public class LabyrinthSingleton {
             System.out.print("\n");
         }
     }
-    
+
     public void buildMap(String path) {
         System.out.println(path);
         IplImage im = mapProcessing.getProcessedImage(path);
@@ -93,7 +145,7 @@ public class LabyrinthSingleton {
     private void buildLabyrinth(IplImage img_bin) {
         FILAS = img_bin.height();
         COLUMNAS = img_bin.width();
-
+        Global.pacmanPixSize = getPixSize(img_bin) / 2 + 1;
         Global.pixSize = 1;
         Global.panelWidth = COLUMNAS;
         Global.panelHeight = FILAS;
@@ -112,5 +164,6 @@ public class LabyrinthSingleton {
                 }
             }
         }
+        calcularpuntos();
     }
 }

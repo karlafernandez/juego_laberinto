@@ -19,7 +19,7 @@ public class LabPanel extends JPanel {
     boolean inicia = true;
 
     private FigureAbstract wall = FlyweightFactory.getWall();
-    private FigureAbstract gate = FlyweightFactory.getGate();
+     private FigureAbstract gate = FlyweightFactory.getGate();
 
     public LabPanel() {
         setSize(Global.panelWidth, Global.panelHeight);
@@ -55,7 +55,7 @@ public class LabPanel extends JPanel {
         L.buildMap(path);
 
         pacman = new PacmanLogic();
-        pacman.setInitialPosition(0, 0);
+        pacman.setInitialPosition( Global.inicio.x,Global.inicio.y);
 
         //Movimiento de Pacman
         Thread pacmanThread = new Thread(pacman);

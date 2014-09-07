@@ -36,10 +36,12 @@ public class PacmanLogic implements Runnable {
         if (enPasillo(pacman.getNextY(), pacman.getNextX())) {
             pacman.updateDirection();
         }
+        if (termino(pacman.getNextY(), pacman.getNextX()))
+            System.out.print("Gano");
     }
 
     public boolean enPasillo(int f, int c) {
-        if ((f >= 0 && c >= 0) && (f < L.lab[0].length && c < L.lab.length)) {
+        if ((f >= 0 && c >= 0) && (f < L.lab[0].length-Global.pacmanPixSize && c < L.lab.length-Global.pacmanPixSize)) {
             for (int i = 0; i < pacman.getPixSize(); ++i) {
                 for (int j = 0; j < pacman.getPixSize(); ++j) {
                     if (L.lab[f + i][c + j] == L.PARED) {
@@ -54,10 +56,22 @@ public class PacmanLogic implements Runnable {
     }
 
     public boolean termino(int f, int c) {
-        if (L.fin.x == f & L.fin.y == c) {
-            return true;
-        }
-        return false;
+       // calculamos si llego a la meta
+        int x ,y=0;
+        
+        x= f+Global.pacmanPixSize>Global.panelHeight?Global.panelHeight-5:f+Global.pacmanPixSize;
+        y= c+Global.pacmanPixSize>Global.panelWidth?Global.panelWidth-5:c+Global.pacmanPixSize;
+        System.out.println(x+"-"+y);
+        boolean rest=false;
+       for (int i = f; i < x; ++i) {
+                for (int j = 0; j < y; ++j) {
+                    if (f==j && c==i) {
+                        rest= true;
+                        break;
+                    }
+                }
+            } 
+       return rest;
     }
 
     public boolean puerta(int f, int c) {
@@ -79,7 +93,7 @@ public class PacmanLogic implements Runnable {
         try {
             while (true) {
                 move();
-                Thread.sleep(pacman.getPixSize() * 10);
+                Thread.sleep(pacman.getPixSize()*10);
             }
         } catch (Exception e) {
             System.out.println("ERROR THREAD");

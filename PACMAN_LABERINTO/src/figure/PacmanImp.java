@@ -22,7 +22,7 @@ public class PacmanImp extends Figure implements Pacman {
 
     @Override
     public void updatePosition(int newLocationX, int newLocationY) {
-        System.out.println(newLocationX + " " + newLocationY);
+        System.out.println(newLocationX + "-" + newLocationY);
                 
         if (newLocationX >= 0 && newLocationX < Global.panelWidth) {
             x = newLocationX;
