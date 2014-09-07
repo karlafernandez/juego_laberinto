@@ -99,7 +99,8 @@ public class LabyrinthSingleton {
         {
          Global.inicio=new Point(puertas.get(0).punto.x,puertas.get(0).punto.y);
          // colocar el final al centro del pacillo
-         Global.fin=new Point(puertas.get(1).punto.x+Global.pacmanPixSize/2,puertas.get(1).punto.y-Global.pacmanPixSize/2);
+         Global.fin=new Point(puertas.get(1).punto.x+Global.pacmanPixSize,puertas.get(1).punto.y-Global.pacmanPixSize/2);
+         System.out.print(Global.fin.x+"-"+Global.fin.y);
         }
     }
 

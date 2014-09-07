@@ -17,7 +17,7 @@ import main.LabyrinthSingleton;
  * @author rgap
  */
 public class PacmanLogic implements Runnable {
-
+    private boolean win=false;
     /**
      * Reference to the flyweight
      */
@@ -37,7 +37,10 @@ public class PacmanLogic implements Runnable {
             pacman.updateDirection();
         }
         if (termino(pacman.getNextY(), pacman.getNextX()))
-            System.out.print("Gano");
+        {
+            win=true; 
+            System.out.print("LLego al Final");
+        }
     }
 
     public boolean enPasillo(int f, int c) {
@@ -57,15 +60,16 @@ public class PacmanLogic implements Runnable {
 
     public boolean termino(int f, int c) {
        // calculamos si llego a la meta
+        //155--599
         int x ,y=0;
-        
         x= f+Global.pacmanPixSize>Global.panelHeight?Global.panelHeight-5:f+Global.pacmanPixSize;
         y= c+Global.pacmanPixSize>Global.panelWidth?Global.panelWidth-5:c+Global.pacmanPixSize;
-        System.out.println(x+"-"+y);
+        
+        //System.out.println("Inicio:"+f+"Final:"+c);
         boolean rest=false;
-       for (int i = f; i < x; ++i) {
-                for (int j = 0; j < y; ++j) {
-                    if (f==j && c==i) {
+       for (int i = f-Global.pixSize; i < x; ++i) {
+                for (int j = c-Global.pixSize; j < y; ++j) {
+                   if (i==Global.fin.y && j==Global.fin.x) {
                         rest= true;
                         break;
                     }
@@ -91,7 +95,7 @@ public class PacmanLogic implements Runnable {
     @Override
     public void run() {
         try {
-            while (true) {
+            while (true && win==false) {
                 move();
                 Thread.sleep(pacman.getPixSize()*10);
             }
