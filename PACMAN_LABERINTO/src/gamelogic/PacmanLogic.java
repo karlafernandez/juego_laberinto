@@ -17,7 +17,8 @@ import main.LabyrinthSingleton;
  * @author rgap
  */
 public class PacmanLogic implements Runnable {
-    private boolean win=false;
+
+    private boolean win = false;
     /**
      * Reference to the flyweight
      */
@@ -36,15 +37,18 @@ public class PacmanLogic implements Runnable {
         if (enPasillo(pacman.getNextY(), pacman.getNextX())) {
             pacman.updateDirection();
         }
-        if (termino(pacman.getNextY(), pacman.getNextX()))
-        {
-            win=true; 
-            System.out.print("LLego al Final");
+        if (termino(pacman.getNextY(), pacman.getNextX())) {
+            win = true;
+            System.out.println("LLego al Final");
+        }
+        if (enPuerta(pacman.getNextY(), pacman.getNextX())) {
+            System.out.println("LLego puerta");
+            //gateAction(pacman.getNextY(), pacman.getNextX());
         }
     }
 
     public boolean enPasillo(int f, int c) {
-        if ((f >= 0 && c >= 0) && (f < L.lab[0].length-Global.pacmanPixSize && c < L.lab.length-Global.pacmanPixSize)) {
+        if ((f >= 0 && c >= 0) && (f < L.lab[0].length - Global.pacmanPixSize && c < L.lab.length - Global.pacmanPixSize)) {
             for (int i = 0; i < pacman.getPixSize(); ++i) {
                 for (int j = 0; j < pacman.getPixSize(); ++j) {
                     if (L.lab[f + i][c + j] == L.PARED) {
@@ -59,27 +63,43 @@ public class PacmanLogic implements Runnable {
     }
 
     public boolean termino(int f, int c) {
-       // calculamos si llego a la meta
+        // calculamos si llego a la meta
         //155--599
-        int x ,y=0;
-        x= f+Global.pacmanPixSize>Global.panelHeight?Global.panelHeight-5:f+Global.pacmanPixSize;
-        y= c+Global.pacmanPixSize>Global.panelWidth?Global.panelWidth-5:c+Global.pacmanPixSize;
-        
+        int x, y = 0;
+        x = f + Global.pacmanPixSize > Global.panelHeight ? Global.panelHeight - 5 : f + Global.pacmanPixSize;
+        y = c + Global.pacmanPixSize > Global.panelWidth ? Global.panelWidth - 5 : c + Global.pacmanPixSize;
+
         //System.out.println("Inicio:"+f+"Final:"+c);
-        boolean rest=false;
-       for (int i = f-Global.pixSize; i < x; ++i) {
-                for (int j = c-Global.pixSize; j < y; ++j) {
-                   if (i==Global.fin.y && j==Global.fin.x) {
-                        rest= true;
-                        break;
-                    }
+        boolean rest = false;
+        for (int i = f - Global.pixSize; i < x; ++i) {
+            for (int j = c - Global.pixSize; j < y; ++j) {
+                if (i == Global.fin.y && j == Global.fin.x) {
+                    rest = true;
+                    break;
                 }
-            } 
-       return rest;
+            }
+        }
+        return rest;
     }
 
-    public boolean puerta(int f, int c) {
-        return L.lab[f][c] == L.PUERTA;
+    public boolean enPuerta(int f, int c) {
+        
+        int contPx = 0;
+        for (int i = f; i < f + Global.pacmanPixSize; ++i) {
+            for (int j = c; j < c + Global.pacmanPixSize; ++j) {
+                if (L.lab[i][j] == L.PUERTA_SALTO || L.lab[i][j] == L.PUERTA_BOMBA) {
+                    contPx ++;
+                }
+            }
+        }
+        
+        if (contPx > Global.pacmanPixSize / 2)
+            return true;
+        return false;
+    }
+
+    public void gateAction() {
+
     }
 
     public void setInitialPosition(int newLocationX, int newLocationY) {
@@ -95,9 +115,9 @@ public class PacmanLogic implements Runnable {
     @Override
     public void run() {
         try {
-            while (true && win==false) {
+            while (true && win == false) {
                 move();
-                Thread.sleep(pacman.getPixSize()*10);
+                Thread.sleep(pacman.getPixSize() * 10);
             }
         } catch (Exception e) {
             System.out.println("ERROR THREAD");

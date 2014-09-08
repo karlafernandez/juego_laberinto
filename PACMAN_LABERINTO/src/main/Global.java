@@ -11,7 +11,10 @@ import java.awt.Point;
  *
  * @author pisque
  */
-public class Global {
+public final class Global {
+    
+    private Global() { // restringir inicializacion
+    }
 
     public static int pixSize = -1;
     public static int pacmanPixSize = 10;

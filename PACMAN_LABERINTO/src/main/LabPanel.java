@@ -69,7 +69,7 @@ public class LabPanel extends JPanel {
             for (int j = 0; j < L.COLUMNAS; ++j) {
                 if (L.lab[i][j] == L.PARED) {
                     g.drawImage(wall.getImage(), x, y, wall.getPixSize(), wall.getPixSize(), this);
-                } else if (L.lab[i][j] == L.PUERTA) {
+                } else if (L.lab[i][j] == L.PUERTA_SALTO || L.lab[i][j] == L.PUERTA_BOMBA) {
                     g.drawImage(gate.getImage(), x, y, gate.getPixSize(), gate.getPixSize(), this);
                 }
                 x += wall.getPixSize();

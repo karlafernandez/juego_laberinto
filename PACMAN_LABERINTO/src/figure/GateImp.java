@@ -20,10 +20,10 @@ public class GateImp extends Figure implements FigureAbstract {
     /**
     * Intrinsic State
     */
-    
+        
     GateImp(){
         String currentDir = System.getProperty("user.dir");
-        image = new ImageIcon(currentDir+"/recursos/gate.jpg").getImage();
+        image = new ImageIcon(currentDir+"/recursos/gate.png").getImage();
     }
     
     @Override
