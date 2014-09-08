@@ -1,6 +1,7 @@
 package main;
 
 import com.googlecode.javacv.cpp.opencv_core.IplImage;
+import gamelogic.PacmanGlobal;
 import imageProcessing.MapProcessing;
 import java.awt.Point;
 import java.nio.ByteBuffer;
@@ -28,6 +29,8 @@ public class LabyrinthSingleton {
     public int PUERTA_BOMBA = 3;
     public int lab[][];
     private MapProcessing mapProcessing;
+    private ArrayList<Point> paredes = new ArrayList<Point>();
+    private ArrayList<Point> pasillos = new ArrayList<Point>();
 
     private LabyrinthSingleton() {
         mapProcessing = new MapProcessing();
@@ -99,7 +102,7 @@ public class LabyrinthSingleton {
         if (puertas.size() >= 0) {
             Global.inicio = new Point(puertas.get(0).punto.x, puertas.get(0).punto.y);
             // colocar el final al centro del pacillo
-            Global.fin = new Point(puertas.get(1).punto.x + Global.pacmanPixSize, puertas.get(1).punto.y - Global.pacmanPixSize / 2);
+            Global.fin = new Point(puertas.get(1).punto.x + PacmanGlobal.pacmanPixSize, puertas.get(1).punto.y - PacmanGlobal.pacmanPixSize / 2);
             System.out.print(Global.fin.x + "-" + Global.fin.y);
         }
     }
@@ -144,92 +147,85 @@ public class LabyrinthSingleton {
         //mostrar_lab();
     }
 
-    public void setGates() {
-        int numGates = 5;
-        ArrayList<Point> paredes = new ArrayList<Point>();
-        for (int i = 0; i < FILAS; ++i) {
-            for (int j = 0; j < COLUMNAS; ++j) {
-                if (lab[i][j] == PARED) {
-                    paredes.add(new Point(i, j));
-                }
-            }
-        }
+    public Point getRandomPosition() {
+        int maximum = pasillos.size() - 1;
+        int minimum = 0;
+        int range = maximum - minimum + 1;
+        Random rn = new Random();
+        int randPos = rn.nextInt(range) + minimum;
+        return pasillos.get(randPos);
+    }
 
-        int limit = Global.pacmanPixSize * 3;
+    public void setGates() {
+        int numGates = 20;
+        int limit = PacmanGlobal.pacmanPixSize * 4;
         int maximum = paredes.size() - 1;
         int minimum = 0;
         int range = maximum - minimum + 1;
         Random rn = new Random();
         int step[] = {-1, -1, -1, 1, 1, 1, 1, -1};
+        int maxpuerta = PUERTA_BOMBA;
+        int minpuerta = PUERTA_SALTO;
+        int rangepuerta = maxpuerta - minpuerta + 1;
+        Random rnpuerta = new Random();
+        int randGateType;
 
         for (int k = 0; k < numGates; k++) {
             int randPos = rn.nextInt(range) + minimum;
             Point current = paredes.get(randPos);
 
-            lab[current.y][current.x] = PUERTA_BOMBA;
+            randGateType = rnpuerta.nextInt(rangepuerta) + minpuerta;
+            lab[current.y][current.x] = randGateType;
 
             for (int p = 1; p <= limit / 3 + 1; ++p) {
                 int c_pasillo = 0;
 
                 int i = current.y + p * step[0];
                 for (int j = current.x + p * step[1]; i >= 0 && i < Global.panelHeight
-                        && j >= 0 && j < Global.panelWidth && j < current.x + p * step[3]; ++j) {
+                        && j >= 0 && j < Global.panelWidth && j <= current.x + p * step[3]; ++j) {
                     System.out.println(i + " - " + Global.panelHeight);
                     if (lab[i][j] == PASILLO) {
                         c_pasillo++;
                     } else {
-                        lab[i][j] = PUERTA_BOMBA;
+                        lab[i][j] = randGateType;
                     }
-                }
-                if (c_pasillo == limit) {
-                    break;
                 }
                 //////////////
                 c_pasillo = 0;
 
                 i = current.x + p * step[3];
                 for (int j = current.y + p * step[2]; i >= 0 && i < Global.panelWidth
-                        && j >= 0 && j < Global.panelHeight && j < current.y + p * step[4]; ++j) {
+                        && j >= 0 && j < Global.panelHeight && j <= current.y + p * step[4]; ++j) {
                     if (lab[j][i] == PASILLO) {
                         c_pasillo++;
                     } else {
-                        lab[j][i] = PUERTA_BOMBA;
+                        lab[j][i] = randGateType;
                     }
-                }
-                if (c_pasillo == limit) {
-                    break;
                 }
                 //////////////
                 c_pasillo = 0;
 
                 i = current.y + p * step[4];
                 for (int j = current.x + p * step[7]; i >= 0 && i < Global.panelHeight
-                        && j >= 0 && j < Global.panelWidth && j < current.x + p * step[5]; ++j) {
+                        && j >= 0 && j < Global.panelWidth && j <= current.x + p * step[5]; ++j) {
                     if (lab[i][j] == PASILLO) {
                         c_pasillo++;
                     } else {
-                        lab[i][j] = PUERTA_BOMBA;
+                        lab[i][j] = randGateType;
                     }
-                }
-                if (c_pasillo == limit) {
-                    break;
                 }
 
                 //////////////
                 c_pasillo = 0;
 
                 i = current.x + p * step[7];
-                for (int j = current.y + p * step[0]; i >= 0 && i < Global.panelWidth && j >= 0 && j < Global.panelHeight && j < current.y + p * step[6]; ++j) {
+                for (int j = current.y + p * step[0]; i >= 0 && i < Global.panelWidth && j >= 0 && j < Global.panelHeight && j <= current.y + p * step[6]; ++j) {
                     if (lab[j][i] == PASILLO) {
                         c_pasillo++;
                     } else {
-                        lab[j][i] = PUERTA_BOMBA;
+                        lab[j][i] = randGateType;
                     }
                 }
-                if (c_pasillo == limit) {
-                    break;
-                }
-
             }
         }
     }
@@ -237,7 +233,7 @@ public class LabyrinthSingleton {
     private void buildLabyrinth(IplImage img_bin) {
         FILAS = img_bin.height();
         COLUMNAS = img_bin.width();
-        Global.pacmanPixSize = getPixSize(img_bin) / 2 + 1;
+        PacmanGlobal.pacmanPixSize = getPixSize(img_bin) / 2 + 1;
         Global.pixSize = 1;
         Global.panelWidth = COLUMNAS;
         Global.panelHeight = FILAS;
@@ -250,10 +246,11 @@ public class LabyrinthSingleton {
                 int index = y * img_bin.widthStep() + x * img_bin.nChannels();
                 value = buffer.get(index) & 0xFF;
                 if (value > 0) {
-
                     lab[y][x] = PARED;
+                    paredes.add(new Point(x, y));
                 } else {
                     lab[y][x] = PASILLO;
+                    pasillos.add(new Point(x, y));
                 }
             }
         }

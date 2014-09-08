@@ -1,5 +1,6 @@
 package figure;
 
+import gamelogic.PacmanGlobal;
 import java.awt.Graphics;
 import java.awt.Image;
 import javax.swing.ImageIcon;
@@ -32,7 +33,7 @@ public class PacmanImp extends Figure implements Pacman {
 
     @Override
     public void draw(Graphics g) {
-        g.drawImage(image, x, y, Global.pacmanPixSize, Global.pacmanPixSize, null);
+        g.drawImage(image, x, y, PacmanGlobal.pacmanPixSize, PacmanGlobal.pacmanPixSize, null);
     }
 
     @Override
@@ -47,7 +48,7 @@ public class PacmanImp extends Figure implements Pacman {
 
     @Override
     public int getPixSize() {
-        return Global.pacmanPixSize;
+        return PacmanGlobal.pacmanPixSize;
     }
 
     @Override

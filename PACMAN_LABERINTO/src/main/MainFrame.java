@@ -15,7 +15,7 @@ import javax.swing.JMenuItem;
 
 public class MainFrame extends JFrame implements ActionListener {
 
-    static LabPanel P = new LabPanel();
+    public static LabPanel P = null;
 
     JFileChooser fc;
 
@@ -44,6 +44,7 @@ public class MainFrame extends JFrame implements ActionListener {
         menu.add(menuItem_loadMap);
 
         menu = new JMenu("Ayuda");
+     
         menuBar.add(menu);
         menuItem_about = new JMenuItem("Acerca del juego");
         menu.add(menuItem_about);
@@ -65,10 +66,12 @@ public class MainFrame extends JFrame implements ActionListener {
     }
 
     public void updateFrame(String path) {
+        P = new LabPanel(this);
         P.updatePanel(path);
+        this.add(P);
         setSize(Global.panelWidth, Global.panelHeight + 50);
     }
-
+    
     //mapProcessing.
     public class AL extends KeyAdapter {
 
@@ -87,7 +90,6 @@ public class MainFrame extends JFrame implements ActionListener {
         //Frame
         MainFrame frame = new MainFrame();
         frame.setVisible(true);
-        frame.add(P);
         frame.updateFrame("");
     }
 }

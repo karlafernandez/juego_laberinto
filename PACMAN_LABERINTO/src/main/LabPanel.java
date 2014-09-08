@@ -2,26 +2,31 @@ package main;
 
 import figure.FigureAbstract;
 import figure.FlyweightFactory;
-import gamelogic.PacmanLogic;
+import figure.Pacman;
+import gamelogic.GameLogic;
+import gamelogic.PacmanGlobal;
 import imageProcessing.MapProcessing;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.KeyEvent;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 public class LabPanel extends JPanel {
 
+    private MainFrame frame;
     private Image dbImage;
     private Graphics dbg;
-    private PacmanLogic pacman;
+    private GameLogic game;
     private LabyrinthSingleton L;
     boolean inicia = true;
 
     private FigureAbstract wall = FlyweightFactory.getWall();
-     private FigureAbstract gate = FlyweightFactory.getGate();
+    private FigureAbstract gate = FlyweightFactory.getGate();
 
-    public LabPanel() {
+    public LabPanel(MainFrame frame) {
+        this.frame = frame;
         setSize(Global.panelWidth, Global.panelHeight);
         setVisible(true);
         setBackground(Color.BLACK);
@@ -31,14 +36,23 @@ public class LabPanel extends JPanel {
     }
 
     public void keyPressed(KeyEvent e) {
-        pacman.keyPressed(e);
+        game.keyPressed(e);
     }
 
     public void keyReleased(KeyEvent e) {
-        pacman.keyReleased(e);
+        game.keyReleased(e);
     }
 
     public void paint(Graphics g) {
+        if(Global.gameState == 1 || Global.gameState == 4){
+            PacmanGlobal.pacmanThread.interrupt();
+            if (Global.gameState == 1) {
+                JOptionPane.showMessageDialog(this, "Ganaste");
+            } else if (Global.gameState == 4) {
+                JOptionPane.showMessageDialog(this, "Perdiste");
+            }
+            frame.dispose();
+        }
         dbImage = createImage(getWidth(), getHeight());
         dbg = dbImage.getGraphics();
         paintComponent(dbg);
@@ -47,19 +61,19 @@ public class LabPanel extends JPanel {
 
     public void paintComponent(Graphics g) {
         construirLaberinto(g);
-        pacman.draw(g);
+        game.draw(g);
         repaint();
     }
 
     public void updatePanel(String path) {
         L.buildMap(path);
-
-        pacman = new PacmanLogic();
-        pacman.setInitialPosition( Global.inicio.x,Global.inicio.y);
+        
+        game = new GameLogic();
+        game.setInitialPosition(Global.inicio.x, Global.inicio.y);
 
         //Movimiento de Pacman
-        Thread pacmanThread = new Thread(pacman);
-        pacmanThread.start();
+        PacmanGlobal.pacmanThread = new Thread(game);
+        PacmanGlobal.pacmanThread.start();
     }
 
     public void construirLaberinto(Graphics g) {

@@ -17,9 +17,9 @@ public final class Global {
     }
 
     public static int pixSize = -1;
-    public static int pacmanPixSize = 10;
     public static int panelWidth = -1;
     public static int panelHeight = -1;
     public static Point inicio; 
     public static Point fin ; 
+    public static int gameState;
 }

@@ -8,6 +8,7 @@ package gamelogic;
 import figure.FlyweightFactory;
 import figure.Pacman;
 import java.awt.Graphics;
+import java.awt.Point;
 import java.awt.event.KeyEvent;
 import main.Global;
 import main.LabyrinthSingleton;
@@ -16,9 +17,8 @@ import main.LabyrinthSingleton;
  *
  * @author rgap
  */
-public class PacmanLogic implements Runnable {
+public class GameLogic implements Runnable {
 
-    private boolean win = false;
     /**
      * Reference to the flyweight
      */
@@ -29,34 +29,39 @@ public class PacmanLogic implements Runnable {
      */
     private LabyrinthSingleton L;
 
-    public PacmanLogic() {
-        this.L = LabyrinthSingleton.getInstance();
+    public GameLogic() {
+        L = LabyrinthSingleton.getInstance();
+        Global.gameState = 0; // 0 = nothing, 1 = win, 2 = gateSalto, 3 = gateBomba, 4 = lose
     }
 
     public void move() {
-        if (enPasillo(pacman.getNextY(), pacman.getNextX())) {
-            pacman.updateDirection();
-        }
         if (termino(pacman.getNextY(), pacman.getNextX())) {
-            win = true;
+            Global.gameState = 1;
             System.out.println("LLego al Final");
         }
-        if (enPuerta(pacman.getNextY(), pacman.getNextX())) {
-            System.out.println("LLego puerta");
-            //gateAction(pacman.getNextY(), pacman.getNextX());
+        if (enPasillo(pacman.getNextY(), pacman.getNextX())) {
+            pacman.updateDirection();
+        } else if (enPuerta(pacman.getNextY(), pacman.getNextX())) {
+            pacman.updateDirection();
+            gateAction(pacman.getNextY(), pacman.getNextX());
         }
     }
 
     public boolean enPasillo(int f, int c) {
-        if ((f >= 0 && c >= 0) && (f < L.lab[0].length - Global.pacmanPixSize && c < L.lab.length - Global.pacmanPixSize)) {
+        int countPared = 0;
+        if ((f >= 0 && c >= 0) && (f < L.lab[0].length - PacmanGlobal.pacmanPixSize && c < L.lab.length - PacmanGlobal.pacmanPixSize)) {
             for (int i = 0; i < pacman.getPixSize(); ++i) {
                 for (int j = 0; j < pacman.getPixSize(); ++j) {
                     if (L.lab[f + i][c + j] == L.PARED) {
-                        return false;
+                        countPared++;
                     }
                 }
             }
-            return true;
+            if (countPared > 25) {
+                return false;
+            } else {
+                return true;
+            }
         } else {
             return false;
         }
@@ -66,8 +71,8 @@ public class PacmanLogic implements Runnable {
         // calculamos si llego a la meta
         //155--599
         int x, y = 0;
-        x = f + Global.pacmanPixSize > Global.panelHeight ? Global.panelHeight - 5 : f + Global.pacmanPixSize;
-        y = c + Global.pacmanPixSize > Global.panelWidth ? Global.panelWidth - 5 : c + Global.pacmanPixSize;
+        x = f + PacmanGlobal.pacmanPixSize > Global.panelHeight ? Global.panelHeight - 5 : f + PacmanGlobal.pacmanPixSize;
+        y = c + PacmanGlobal.pacmanPixSize > Global.panelWidth ? Global.panelWidth - 5 : c + PacmanGlobal.pacmanPixSize;
 
         //System.out.println("Inicio:"+f+"Final:"+c);
         boolean rest = false;
@@ -83,23 +88,56 @@ public class PacmanLogic implements Runnable {
     }
 
     public boolean enPuerta(int f, int c) {
-        
+
         int contPx = 0;
-        for (int i = f; i < f + Global.pacmanPixSize; ++i) {
-            for (int j = c; j < c + Global.pacmanPixSize; ++j) {
+        for (int i = f; i < f + PacmanGlobal.pacmanPixSize; ++i) {
+            for (int j = c; j < c + PacmanGlobal.pacmanPixSize; ++j) {
                 if (L.lab[i][j] == L.PUERTA_SALTO || L.lab[i][j] == L.PUERTA_BOMBA) {
-                    contPx ++;
+                    contPx++;
+                    Global.gameState = L.lab[i][j];
                 }
             }
         }
-        
-        if (contPx > Global.pacmanPixSize / 2)
+
+        if (contPx >= PacmanGlobal.pacmanPixSize / 3) {
             return true;
+        }
         return false;
     }
 
-    public void gateAction() {
+    public void gateAction(int f, int c) {
+        if (Global.gameState == L.PUERTA_SALTO) {
+            System.out.println("LLego puerta salto");
+            Point p = L.getRandomPosition();
 
+            int contX = 0;
+            int contY = 0;
+            for (int i = p.x; i < pacman.getPixSize(); ++i) {
+                if (L.lab[f][i] == L.PARED || L.lab[f][i] == L.PUERTA_BOMBA || L.lab[f][i] == L.PUERTA_SALTO) {
+                    if (i < (i + pacman.getPixSize()) / 2) {
+                        contX--;
+                    } else {
+                        contX++;
+                    }
+                }
+            }
+            for (int j = p.y; j < pacman.getPixSize(); ++j) {
+                if (L.lab[j][c] == L.PARED || L.lab[j][c] == L.PUERTA_BOMBA || L.lab[j][c] == L.PUERTA_SALTO) {
+                    if (j < (j + pacman.getPixSize()) / 2) {
+                        contY--;
+                    } else {
+                        contY++;
+                    }
+                }
+            }
+
+            setInitialPosition(p.x + contX, p.y + contY);
+
+        } else {
+            System.out.println("LLego puerta bomba");
+            Global.gameState = 4;
+
+        }
     }
 
     public void setInitialPosition(int newLocationX, int newLocationY) {
@@ -115,7 +153,7 @@ public class PacmanLogic implements Runnable {
     @Override
     public void run() {
         try {
-            while (true && win == false) {
+            while (true) {
                 move();
                 Thread.sleep(pacman.getPixSize() * 10);
             }
