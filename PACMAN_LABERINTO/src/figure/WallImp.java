@@ -10,10 +10,6 @@ import java.awt.Image;
 import javax.swing.ImageIcon;
 import main.Global;
 
-/**
- *
- * @author rgap
- */
 public class WallImp extends Figure implements FigureAbstract {
 
     /**

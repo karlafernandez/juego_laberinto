@@ -1,9 +1,7 @@
 package figure;
 
-import figure.Pacman;
 import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;
 import main.Global;
 
